@@ -30,23 +30,35 @@ appliquant une stratégie de votre cru (peu importe s’il ne joue pas très bie
 
 ###################### FIN ALGO #####################
 
-
+#nb d'allumettes
 lucifer = 21
 players = []
-new_game = 1
+new_game = True
+# a qui le tour
+must_play = ""
 
 def verif_nb_sub (x):
     return x.isdigit
 
-
 for i in range(2):
-    nom = input("Nom du joueur " + str(i) +" ?")
+    nom = input("Nom du joueur " + str(i + 1) + " ?")
     players.append(nom)
+    must_play = players[0]
 
-while new_game == 1:
+
+while new_game == True:
+
     if lucifer != 1:
+
+        print("c'est à ", must_play.upper(), " de jouer")
+
+        if must_play == players[0]:
+            must_play = players[1]
+        elif must_play == players[1]:
+            must_play = players[0]
+
         print ( "\rEnleve entre 1 et 4 allumettes" )
-        print ("c'est à ", players [0] , " de jouer")
+
         ok = False
 
         #verif du nombre demandé
@@ -55,9 +67,24 @@ while new_game == 1:
             if nb.isdigit():
                 ok = True
                 nb = int(nb)
-            if nb < 1 or nb > 4:
-                print ("Recommence ton choix doit être entre 1 et 4 allumettes")
-                ok = False
+                if nb < 1 or nb > 4 or lucifer - nb < 1:
+                    print ("Recommence ton choix doit être entre 1 et 4 allumettes et il doit rester au moins 1 allumette")
+                    ok = False
+                    nb = 0
+                else:
+                    lucifer -= nb
+                    print("Il reste ", lucifer, "allumettes")
 
-        lucifer -= nb
-        print("Il reste ", lucifer, "allumettes")
+    elif lucifer == 1:
+        if must_play == players[0]:
+            must_play = players[1]
+        elif must_play == players[1]:
+            must_play = players[0]
+        print ("Partie terminée, victoire de ", must_play.upper())
+        new_game = False
+        answer_nw_g = input("Nouvelle partie? Oui?")
+        if answer_nw_g.lower() == "oui" or answer_nw_g.lower() == "o":
+            new_game = True
+            lucifer = 21
+            ok = True
+
