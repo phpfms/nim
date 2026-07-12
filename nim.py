@@ -29,3 +29,35 @@ appliquant une stratégie de votre cru (peu importe s’il ne joue pas très bie
 
 
 ###################### FIN ALGO #####################
+
+
+lucifer = 21
+players = []
+new_game = 1
+
+def verif_nb_sub (x):
+    return x.isdigit
+
+
+for i in range(2):
+    nom = input("Nom du joueur " + str(i) +" ?")
+    players.append(nom)
+
+while new_game == 1:
+    if lucifer != 1:
+        print ( "\rEnleve entre 1 et 4 allumettes" )
+        print ("c'est à ", players [0] , " de jouer")
+        ok = False
+
+        #verif du nombre demandé
+        while ok == False:
+            nb = input("combien d'allumettes veux tu retirer?:")
+            if nb.isdigit():
+                ok = True
+                nb = int(nb)
+            if nb < 1 or nb > 4:
+                print ("Recommence ton choix doit être entre 1 et 4 allumettes")
+                ok = False
+
+        lucifer -= nb
+        print("Il reste ", lucifer, "allumettes")
